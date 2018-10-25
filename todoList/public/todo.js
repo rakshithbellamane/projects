@@ -3,6 +3,8 @@ var todoList = document.getElementById('todoList')
 var deleteButton = document.getElementById('deleteListItem')
 var listObjs
 
+/* create list elements and add to DOM */
+
 function addListItemToDom(id,value,callback){
   let listItem = document.createElement('li')
   listItem.id = 'listItem' + id
