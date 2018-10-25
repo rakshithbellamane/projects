@@ -2,7 +2,6 @@ var todoInput = document.getElementById('todoInput')
 var todoList = document.getElementById('todoList')
 var deleteButton = document.getElementById('deleteListItem')
 var listObjs
-var numListItems = 0
 
 function addListItemToDom(id,value,callback){
   let listItem = document.createElement('li')
