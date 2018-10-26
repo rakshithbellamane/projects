@@ -61,6 +61,17 @@ app.put('/listUpdate',function(req,res){
   res.json(req.body)
 })
 
+app.delete('/deleteListItems',function(req,res){
+  console.log('processed DELETE')
+  listTable.deleteMany(
+    {
+      "listID": {$in : req.body}
+    }
+  )
+  res.json(req.body)
+})
+
+
 app.listen(8000,()=>{
   console.log('express based node app is listening on port 8000')
 })

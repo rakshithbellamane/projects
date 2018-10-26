@@ -16,6 +16,8 @@ function addListItemToDom(id,value,callback){
   listItemValue.id = 'listItemValue' + id
   listItemValue.innerText = value
   listItemValue.contentEditable = true
+
+  listItemValue.addEventListener('focusout',updateListItem)
   
   todoList.appendChild(listItem)
   listItem.appendChild(listItemCheckBox)
@@ -73,22 +75,40 @@ deleteButton.addEventListener('click',function(){
     }
   }
 
+  /*let data = {
+    listID: deleteListItemIds
+  }*/
+
+  let fetchData = {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify(deleteListItemIds)
+  }
+
+  fetch('http://localhost:8000/deleteListItems',fetchData)
+  .then(function(response){
+    console.log('delete list called')
+  })
+
   for(let listItemId of deleteListItemIds){
     document.getElementById(listItemId).remove()
   }
+
 })
 
-todoList.addEventListener('focusout',function(e){
+function updateListItem(e){
   console.log(e.target.innerText)
 
   if(listObjs.find(listObj => listObj.listID == e.target.parentElement.id).listDetail != e.target.innerText){
+    
+    listObjs.find(listObj => listObj.listID == e.target.parentElement.id).listDetail = e.target.innerText
     
     let data = {
       listID: e.target.parentElement.id,
       listDetail: e.target.innerText
     }
-
-
 
     let fetchData = {
       method: 'PUT',
@@ -103,4 +123,4 @@ todoList.addEventListener('focusout',function(e){
       console.log('called listUpdate')
     })
   }
-})
+}
