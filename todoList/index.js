@@ -2,21 +2,21 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 
-app.use(express.static('./public'))
+app.use(express.static('./todoList/public'))
 app.use(bodyParser.json())
 
 var MongoClient = require('mongodb').MongoClient
-var url = 'mongodb://localhost/listDB'
+var uri = 'mongodb+srv://rakshith:Design32INFY@crucible-bvg5f.mongodb.net/crucibledb'
 var initialList = []
 var listDatabase
 var listTable
 
 function getMongoConnection(callback){
-  MongoClient.connect(url,function(err,db){
+  MongoClient.connect(uri,function(err,db){
     if (err){
       callback(err,null)
     } else {
-      listDatabase = db.db('listDB')
+      listDatabase = db.db('crucibledb')
       callback(null,listDatabase)
     }
   })
