@@ -48,7 +48,6 @@ app.post('/newList',(req,res) =>{
 
 app.put('/listUpdate',function(req,res){
   console.log('processed PUT')
-
   listTable.updateOne(
     {
       "listID":req.body.listID
@@ -57,12 +56,6 @@ app.put('/listUpdate',function(req,res){
         $set:{
           "listDetail":req.body.listDetail
       }
-    },
-    function(error,result){
-      console.log(req.body.listID)
-      console.log(req.body.listDetail)
-      console.log(error)
-      console.log(result.matchedCount)
     }
   )
   res.json(req.body)

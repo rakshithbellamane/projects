@@ -2,8 +2,7 @@ var todoInput = document.getElementById('todoInput')
 var todoList = document.getElementById('todoList')
 var deleteButton = document.getElementById('deleteListItem')
 var listObjs
-
-/* create list elements and add to DOM */
+var numListItems = 0
 
 function addListItemToDom(id,value,callback){
   let listItem = document.createElement('li')
@@ -22,7 +21,9 @@ function addListItemToDom(id,value,callback){
   listItem.appendChild(listItemCheckBox)
   listItem.appendChild(listItemValue)
 
-  callback(id,value)
+  if(callback){
+    callback(listItem.id,value)
+  }
 }
 
 
@@ -31,14 +32,14 @@ fetch('http://localhost:8000/first-list')
   .then(function(initialList){
     listObjs = initialList
     for(const singleItem of initialList){
-      addListItemToDom(singleItem.listID.slice(8),singleItem.listDetail)
+      addListItemToDom(parseInt(singleItem.listID.slice(8)),singleItem.listDetail)
     }
   })
 
 
 todoInput.addEventListener('keypress',function(event){
   if (event.key === 'Enter'){
-    addListItemToDom((todoList.childElementCount == 0)? 1:++todoList.lastElementChild.id.slice(8),todoInput.value,function(id,value){
+    addListItemToDom((todoList.childElementCount == 0)? 1:parseInt(todoList.lastElementChild.id.slice(8))+1,todoInput.value,function(id,value){
       let data = {
         listID: id,
         listDetail: value
@@ -80,10 +81,10 @@ deleteButton.addEventListener('click',function(){
 todoList.addEventListener('focusout',function(e){
   console.log(e.target.innerText)
 
-  if(listObjs.find(listObj => listObj.listID == e.target.id).listDetail != e.target.innerText){
+  if(listObjs.find(listObj => listObj.listID == e.target.parentElement.id).listDetail != e.target.innerText){
     
     let data = {
-      listID: e.target.id,
+      listID: e.target.parentElement.id,
       listDetail: e.target.innerText
     }
 
