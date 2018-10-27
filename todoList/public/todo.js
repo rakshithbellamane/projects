@@ -29,7 +29,7 @@ function addListItemToDom(id,value,callback){
 }
 
 
-fetch('http://localhost:8000/first-list')
+fetch('http://localhost:8000/listItems')
   .then(function(response){return response.json()})
   .then(function(initialList){
     listObjs = initialList
@@ -57,7 +57,7 @@ todoInput.addEventListener('keypress',function(event){
         body: JSON.stringify(data)
       }
   
-      fetch('http://localhost:8000/newList',fetchData)
+      fetch('http://localhost:8000/listItems',fetchData)
         .then(function(response){
           console.log('called newList')
         })
@@ -87,7 +87,7 @@ deleteButton.addEventListener('click',function(){
     body: JSON.stringify(deleteListItemIds)
   }
 
-  fetch('http://localhost:8000/deleteListItems',fetchData)
+  fetch('http://localhost:8000/listItems',fetchData)
   .then(function(response){
     console.log('delete list called')
   })
@@ -118,7 +118,7 @@ function updateListItem(e){
       body: JSON.stringify(data)
     }
 
-    fetch('http://localhost:8000/listUpdate',fetchData)
+    fetch('http://localhost:8000/listItems',fetchData)
     .then(function(response){
       console.log('called listUpdate')
     })

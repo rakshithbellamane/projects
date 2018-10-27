@@ -33,20 +33,21 @@ function getInitialList(callback){
 })
 }
 
-app.get('/first-list',(req,res) =>{
+app.get('/listItems',(req,res) =>{
+  console.log('processed GET')
   getInitialList(function(error, firstList){
     res.send(firstList)
   })
 })
 
 
-app.post('/newList',(req,res) =>{
+app.post('/listItems',(req,res) =>{
   console.log('processed POST')
   listTable.insertOne(req.body)
   res.json(req.body)
 })
 
-app.put('/listUpdate',function(req,res){
+app.put('/listItems',function(req,res){
   console.log('processed PUT')
   listTable.updateOne(
     {
@@ -61,7 +62,7 @@ app.put('/listUpdate',function(req,res){
   res.json(req.body)
 })
 
-app.delete('/deleteListItems',function(req,res){
+app.delete('/listItems',function(req,res){
   console.log('processed DELETE')
   listTable.deleteMany(
     {
